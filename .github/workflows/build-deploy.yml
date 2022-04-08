@@ -21,3 +21,19 @@ jobs:
 
       - name: Deploy static site to S3 bucket
         run: aws s3 sync ./ s3://rbc-cicd --delete
+
+        name: Push to EC2 Instance
+        runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v1
+
+      - name: Deploy to my EC2 instance
+        uses: easingthemes/ssh-deploy@v2.1.5
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          SOURCE: "./"
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: "ec2-user"
+          TARGET: "/var/www/html "
