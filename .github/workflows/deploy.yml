@@ -9,6 +9,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      # Deploys repo content to AWS S3 bucket
+
       - name: Checkout
         uses: actions/checkout@v1
 
@@ -21,6 +23,8 @@ jobs:
 
       - name: Deploy static site to S3 bucket
         run: aws s3 sync ./ s3://rbc-cicd --delete
+
+      # Deploys repo content to EC2 instance
 
       - name: Checkout the code
         uses: actions/checkout@v1
